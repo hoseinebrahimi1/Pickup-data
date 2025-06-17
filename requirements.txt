@@ -1,0 +1,13 @@
+# برای API (FastAPI + سرور)
+fastapi
+uvicorn[standard]
+
+# کتاب‌خانه‌های مشترک و ویژه‌ی اسکریپت‌ها
+pandas
+requests
+gspread
+gspread-dataframe
+oauth2client
+selenium
+webdriver-manager
+beautifulsoup4
