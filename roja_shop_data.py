@@ -41,7 +41,6 @@ SELLER_NAME = "روژا شاپ"
 CREDENTIALS_PATH = "C:/Users/artin/Desktop/Final project article/khanomi-product-1dc381b0a610.json"
 
 # -------- راه‌اندازی مرورگر --------
-chromedriver_autoinstaller.install()
 
 options = Options()
 options.binary_location = "/tmp/chrome-linux64/chrome"
