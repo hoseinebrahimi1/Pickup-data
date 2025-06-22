@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 import subprocess
 import sys
+import os
+API_KEY = os.getenv("MY_API_KEY")
 
 app = FastAPI()
 
