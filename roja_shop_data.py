@@ -2,6 +2,9 @@ import time
 import re
 import pandas as pd
 import gspread
+import os
+import requests
+import zipfile
 from gspread_dataframe import set_with_dataframe
 from oauth2client.service_account import ServiceAccountCredentials
 from selenium import webdriver
@@ -10,6 +13,26 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.chrome.options import Options
 import chromedriver_autoinstaller
+
+def install_chrome():
+    chrome_url = "https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.128/linux64/chrome-linux64.zip"
+    chrome_dir = "/tmp/chrome"
+    zip_path = "/tmp/chrome.zip"
+
+    if not os.path.exists(chrome_dir):
+        print("⬇️ دانلود Chrome...")
+        with requests.get(chrome_url, stream=True) as r:
+            with open(zip_path, 'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
+
+        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+            zip_ref.extractall("/tmp/")
+        
+        os.chmod("/tmp/chrome-linux64/chrome", 0o755)
+        os.environ["PATH"] += os.pathsep + "/tmp/chrome-linux64"
+
+install_chrome()
 # -------- تنظیمات --------
 PLP_URL = "https://rojashop.com/shop/behdashti/skin-care-sub-sun-care"
 GOOGLE_SHEET_NAME = "Data-sunscreen-products"
@@ -21,10 +44,10 @@ CREDENTIALS_PATH = "C:/Users/artin/Desktop/Final project article/khanomi-product
 chromedriver_autoinstaller.install()
 
 options = Options()
+options.binary_location = "/tmp/chrome-linux64/chrome"
 options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
-options.add_argument("--disable-gpu")
 
 driver = webdriver.Chrome(options=options)
 
