@@ -6,12 +6,10 @@ from gspread_dataframe import set_with_dataframe
 from oauth2client.service_account import ServiceAccountCredentials
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.firefox.service import Service
-from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from webdriver_manager.firefox import GeckoDriverManager
-
+from selenium.webdriver.chrome.options import Options
+import chromedriver_autoinstaller
 # -------- تنظیمات --------
 PLP_URL = "https://rojashop.com/shop/behdashti/skin-care-sub-sun-care"
 GOOGLE_SHEET_NAME = "Data-sunscreen-products"
@@ -20,9 +18,16 @@ SELLER_NAME = "روژا شاپ"
 CREDENTIALS_PATH = "C:/Users/artin/Desktop/Final project article/khanomi-product-1dc381b0a610.json"
 
 # -------- راه‌اندازی مرورگر --------
+chromedriver_autoinstaller.install()
+
 options = Options()
 options.add_argument("--headless")
-driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--disable-gpu")
+
+driver = webdriver.Chrome(options=options)
+
 driver.set_window_size(400, 800)  # تنظیم ابعاد موبایل
 wait = WebDriverWait(driver, 10)
 
