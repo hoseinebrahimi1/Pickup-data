@@ -13,7 +13,7 @@ async def ping():
 @app.post("/run/roja")
 async def run_roja():
     p = subprocess.run(
-        [sys.executable, "app/roja_shop_data.py"],
+        [sys.executable, "roja_shop_data.py"],
         capture_output=True,
         text=True
     )
@@ -26,7 +26,7 @@ async def run_roja():
 @app.post("/run/khanoumi")
 async def run_khanoumi():
     p = subprocess.run(
-        [sys.executable, "app/khanoumi_data.py"],
+        [sys.executable, "khanoumi_data.py"],
         capture_output=True,
         text=True
     )
