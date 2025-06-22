@@ -15,22 +15,29 @@ from selenium.webdriver.chrome.options import Options
 import chromedriver_autoinstaller
 
 def install_chrome():
+    chrome_path = "/tmp/chrome-linux64/chrome"
+    if os.path.exists(chrome_path):
+        print("✅ Chrome قبلاً نصب شده و آماده است.")
+        os.environ["PATH"] += os.pathsep + "/tmp/chrome-linux64"
+        return
+
+    print("⬇️ دانلود Chrome...")
+
     chrome_url = "https://storage.googleapis.com/chrome-for-testing-public/122.0.6261.128/linux64/chrome-linux64.zip"
     chrome_dir = "/tmp/chrome"
     zip_path = "/tmp/chrome.zip"
 
-    if not os.path.exists(chrome_dir):
-        print("⬇️ دانلود Chrome...")
-        with requests.get(chrome_url, stream=True) as r:
-            with open(zip_path, 'wb') as f:
-                for chunk in r.iter_content(chunk_size=8192):
-                    f.write(chunk)
+    with requests.get(chrome_url, stream=True) as r:
+        with open(zip_path, 'wb') as f:
+            for chunk in r.iter_content(chunk_size=8192):
+                f.write(chunk)
 
-        with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-            zip_ref.extractall("/tmp/")
-        
-        os.chmod("/tmp/chrome-linux64/chrome", 0o755)
-        os.environ["PATH"] += os.pathsep + "/tmp/chrome-linux64"
+    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
+        zip_ref.extractall("/tmp/")
+    
+    os.chmod(chrome_path, 0o755)
+    os.environ["PATH"] += os.pathsep + "/tmp/chrome-linux64"
+
 
 install_chrome()
 # -------- تنظیمات --------
